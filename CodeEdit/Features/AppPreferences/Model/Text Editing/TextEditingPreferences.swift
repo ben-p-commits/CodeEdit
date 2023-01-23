@@ -30,6 +30,9 @@ extension AppPreferences {
         /// A multiplier for setting the line height. Defaults to `1.45`
         var lineHeightMultiple: Double = 1.45
 
+        /// A flag indicating whether to display line numbers in the editor
+        var displayLineNumbers: Bool = true
+
         /// Default initializer
         init() {
             self.populateCommands()
@@ -56,6 +59,10 @@ extension AppPreferences {
                 Double.self,
                 forKey: .lineHeightMultiple
             ) ?? 1.45
+            self.displayLineNumbers = try container.decodeIfPresent(
+                Bool.self,
+                forKey: .displayLineNumbers
+            ) ?? true
 
             self.populateCommands()
         }
@@ -88,6 +95,15 @@ extension AppPreferences {
                 id: "prefs.text_editing.wrap_lines_to_editor_width",
                 command: CommandClosureWrapper {
                     AppPreferencesModel.shared.preferences.textEditing.wrapLinesToEditorWidth.toggle()
+                }
+            )
+
+            mgr.addCommand(
+                name: "Toggle Line Numbers",
+                title: "Toggle Line Numbers",
+                id: "prefs.text_editing.show_line_numbers",
+                command: CommandClosureWrapper {
+                    AppPreferencesModel.shared.preferences.textEditing.displayLineNumbers.toggle()
                 }
             )
         }
