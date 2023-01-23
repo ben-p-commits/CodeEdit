@@ -37,6 +37,9 @@ struct TextEditingPreferencesView: View {
 
     var body: some View {
         PreferencesContent {
+            PreferencesSection("Show") {
+                lineNumbers
+            }
             PreferencesSection("Default Tab Width") {
                 HStack(spacing: 5) {
                     TextField("", value: $prefs.preferences.textEditing.defaultTabWidth, formatter: tabWidthFormatter)
@@ -115,6 +118,13 @@ struct TextEditingPreferencesView: View {
                 in: 0.75...2.0,
                 step: 0.05
             )
+        }
+    }
+
+    private var lineNumbers: some View {
+        HStack {
+            Toggle("Line numbers", isOn: $prefs.preferences.textEditing.displayLineNumbers)
+            Text("Line  numbers")
         }
     }
 }
